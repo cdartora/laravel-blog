@@ -20,7 +20,7 @@ class ArticleController extends Controller
     {
         $articles = $this->article::all();
 
-        return view('homepage', ['articles' => $articles]);
+        return view('home', ['articles' => $articles]);
     }
 
     public function show(Article $article): View
@@ -30,7 +30,7 @@ class ArticleController extends Controller
 
     public function create(): View
     {
-        return view('create');
+        return view('articles.create');
     }
 
     public function store(ArticleRequest $request): RedirectResponse
@@ -40,12 +40,12 @@ class ArticleController extends Controller
 
         $this->article::create($validated);
 
-        return redirect()->route('homepage');
+        return redirect()->route('home');
     }
 
     public function edit(Article $article): View
     {
-        return view('edit', ['article' => $article]);
+        return view('articles.edit', ['article' => $article]);
     }
 
     public function update(ArticleRequest $request, Article $article): RedirectResponse
@@ -54,12 +54,12 @@ class ArticleController extends Controller
 
         $this->article->update($validated);
 
-        return redirect()->route('homepage');
+        return redirect()->route('home');
     }
 
     public function destroy(Article $article): RedirectResponse
     {
         $article->delete();
-        return redirect()->route('homepage');
+        return redirect()->route('home');
     }
 }
