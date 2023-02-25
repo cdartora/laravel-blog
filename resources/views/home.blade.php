@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Homepage - Diary')
+@section('title', 'Home - Diary')
 
 @section('content')
     <div class="container mx-auto py-8">

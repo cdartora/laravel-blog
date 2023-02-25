@@ -1,7 +1,7 @@
 <nav class="bg-gray-800 py-4 flex justify-center">
     <div class="container flex justify-between items-center px-2">
         <div>
-            <a href="{{ route('homepage') }}" class="text-xl font-bold text-white">Diary</a>
+            <a href="{{ route('home') }}" class="text-xl font-bold text-white">Diary</a>
         </div>
         <ul class="flex items-center">
             <li><a href="/" class="text-gray-300 hover:text-white px-3 py-2">Home</a></li>
