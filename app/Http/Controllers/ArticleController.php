@@ -2,81 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private $article; // dependency injection with the model
+
+    public function __construct(Article $article)
     {
-        $articles = Article::all();
+        $this->article = $article;
+    }
+
+    public function index(): View
+    {
+        $articles = $this->article::all();
 
         return view('homepage', ['articles' => $articles]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'string|required|max:255',
-            'text' => 'string|required',
-            'image' => 'string|required'
-        ]);
-
-        // dd($validated);
-
-        Article::create([
-            'title' => $validated['title'],
-            'text' => $validated['text'],
-            'image' => $validated['image'],
-        ]);
-
-        return redirect()->route('homepage');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Article $article)
+    public function show(Article $article): View
     {
         return view('posts.show', ['article' => $article]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Article $article)
+    public function create(): View
     {
-        return view('edit', ['article' => $article]);
+        return view('create');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Article $article)
+    public function store(ArticleRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'title' => 'string|required|max:255',
-            'text' => 'string|required',
-            'image' => 'string|required'
-        ]);
+        dd("criou um artigo");
+        $validated = $request->validated();
 
-        $article->update($validated);
+        $this->article::create($validated);
 
         return redirect()->route('homepage');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Article $article)
+    public function edit(Article $article): View
+    {
+        return view('edit', ['article' => $article]);
+    }
+
+    public function update(ArticleRequest $request, Article $article): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $this->article->update($validated);
+
+        return redirect()->route('homepage');
+    }
+
+    public function destroy(Article $article): RedirectResponse
     {
         $article->delete();
-        return redirect(route('homepage'));
+        return redirect()->route('homepage');
     }
 }
