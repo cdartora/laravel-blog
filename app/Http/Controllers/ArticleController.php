@@ -25,7 +25,7 @@ class ArticleController extends Controller
 
     public function show(Article $article): View
     {
-        return view('posts.show', ['article' => $article]);
+        return view('articles.show', ['article' => $article]);
     }
 
     public function create(): View
