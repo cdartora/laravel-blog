@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create new post - Diary')
+@section('title', 'Create post - Diary')
 
 @section('content')
     @include('articles._form', [
